@@ -1,8 +1,8 @@
 import React from "react";
-import { AppRouter } from "../router/AppRouter";
+import { AppRouter } from "router/AppRouter";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
-import cl from "../styles/Layout.module.css";
+import cl from "styles/Layout.module.css";
 
 export const Layout = () => {
 	return (

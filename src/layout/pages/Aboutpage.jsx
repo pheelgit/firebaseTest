@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-
 import { getDatabase, ref, child, get, onValue } from "firebase/database";
 
 export const Aboutpage = () => {
@@ -26,8 +25,6 @@ export const Aboutpage = () => {
 			}
 		);
 	};
-
-	console.log("-------");
 
 	return (
 		<div>
