@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+header {
+	/* background-color: lightseagreen; */
+	padding: 4rem;
+	font-size: 2rem;
+	display: flex;
+	justify-content: center;
+	gap: 2rem;
+}
+
+.active-link {
+	color: red;
+}

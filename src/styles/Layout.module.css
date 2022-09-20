@@ -1,0 +1,7 @@
+.layout {
+	@apply h-screen flex flex-col justify-between align-middle  bg-slate-200;
+}
+
+.main {
+	@apply grow p-4;
+}
