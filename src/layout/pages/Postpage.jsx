@@ -2,17 +2,18 @@ import React, { useState, useEffect } from "react";
 import { db } from "firebase.js";
 import { uid } from "uid";
 import { set, ref, onValue, remove } from "firebase/database";
+import { TodoItem } from "components/TodoItem";
 
 export const Postpage = () => {
 	const [todo, setTodo] = useState("");
 	const [todos, setTodos] = useState("");
 
+	//connecting to db
 	useEffect(() => {
-		onValue(ref(db, "/todos"), (snapshot) => {
+		onValue(ref(db, "todos"), (snapshot) => {
 			const data = snapshot.val();
-			if (data !== null) {
-				setTodos(Object.values(data));
-			}
+			if (data === null) setTodos([]);
+			setTodos(Object.values(data));
 		});
 	}, []);
 
@@ -26,13 +27,10 @@ export const Postpage = () => {
 		setTodo("");
 	};
 
-	const pushToDatabase = () => {};
-
 	const handleDelete = (todo) => {
-		console.dir(todo);
 		remove(ref(db, `/todos/${todo.uuid}`));
 	};
-
+	console.log(todos);
 	return (
 		<div>
 			<input
@@ -43,26 +41,17 @@ export const Postpage = () => {
 			<button onClick={writeToDatabase}>submit post</button>
 			<br />
 			<div>
-				{todos.length &&
+				{todos.length === 0 ? (
+					<h1>no todos</h1>
+				) : (
 					todos.map((todo) => (
-						<div key={todo.uuid}>
-							<button
-								data={todo.uuid}
-								className="bg-red-200 mx-2 border-x-red-800"
-								onClick={() =>
-									handleDelete(todo)
-								}
-							>
-								delete
-							</button>
-							<button className="bg-green-200 mx-2 border-x-gray-800">
-								update
-							</button>
-							<span key={todo.uuid}>
-								{todo.todo}
-							</span>
-						</div>
-					))}
+						<TodoItem
+							key={todo.uuid}
+							todo={todo}
+							handleDelete={handleDelete}
+						/>
+					))
+				)}
 			</div>
 		</div>
 	);
