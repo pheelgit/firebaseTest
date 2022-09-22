@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { db } from "firebase.js";
 import { uid } from "uid";
-import { set, ref, onValue, remove } from "firebase/database";
+import {
+	set,
+	ref,
+	onValue,
+	remove,
+	update,
+	get,
+	child,
+	push,
+} from "firebase/database";
 import { TodoItem } from "components/TodoItem";
 
 export const Postpage = () => {
@@ -12,7 +21,10 @@ export const Postpage = () => {
 	useEffect(() => {
 		onValue(ref(db, "todos"), (snapshot) => {
 			const data = snapshot.val();
-			if (data === null) setTodos([]);
+			if (data === null) {
+				setTodos([]);
+				return;
+			}
 			setTodos(Object.values(data));
 		});
 	}, []);
@@ -27,10 +39,16 @@ export const Postpage = () => {
 		setTodo("");
 	};
 
+	const toggleComplete = (todo) => {
+		update(ref(db, `todos/${todo.uuid}`), {
+			complete: !todo.complete,
+		});
+	};
+
 	const handleDelete = (todo) => {
 		remove(ref(db, `/todos/${todo.uuid}`));
 	};
-	console.log(todos);
+
 	return (
 		<div>
 			<input
@@ -49,6 +67,7 @@ export const Postpage = () => {
 							key={todo.uuid}
 							todo={todo}
 							handleDelete={handleDelete}
+							toggleComplete={toggleComplete}
 						/>
 					))
 				)}

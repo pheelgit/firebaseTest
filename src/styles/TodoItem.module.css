@@ -1,0 +1,6 @@
+.todo {
+	@apply max-w-fit border-cyan-500 border-solid border-2;
+}
+.todoComplete {
+	@apply max-w-fit border-cyan-500 border-solid border-2 bg-stone-500;
+}
